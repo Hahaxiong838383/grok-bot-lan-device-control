@@ -68,6 +68,13 @@ After the Grok Bot computer joins the EasyTier mesh:
 - Domestic relay helps maintain stable connectivity when direct P2P is limited.
 - All control actions still require proper keys, permissions, and approval for sensitive operations.
 
+### Practical Steps for Bots
+1. Confirm EasyTier is running on the cloud computer (`/workspace/easytier/start.sh`).
+2. Test connectivity to the target mesh IP with a longer timeout.
+3. Use the designated SSH key for the main Mac jump host.
+4. For other nodes, follow the same pattern if keys and services are available.
+5. Prefer domestic relay when direct links show high latency or packet loss.
+
 | Role | Typical Function | Notes |
 |------|------------------|-------|
 | Cloud computer | EasyTier client | Start script under `/workspace/easytier/` |
@@ -84,18 +91,23 @@ After the Grok Bot computer joins the EasyTier mesh:
 
 ### SSH to Main Mac
 Use the designated key and the mesh IP of the main Mac jump host.  
-Set ConnectTimeout to 20–30 seconds.
+Set ConnectTimeout to 20–30 seconds.  
+After SSH, all further adb and local scripts run on the Mac.
 
 ### ADB on Tablet
 All adb commands must run **on the Mac**, not from the cloud computer.  
 Use the existing wrapper scripts on the Mac after SSH.
 
-Typical flow (from Phone-Eye / android-adb-control style):
+Recommended tools:
+- Phone-Eye (https://github.com/boheastill/phone-eye) — vision + UI-tree fusion via MCP
+- android-adb-control (https://github.com/robbin/android-adb-control) — observe-act-verify skill
+
+Typical flow:
 1. Screenshot or UI dump (`uiautomator dump` or Phone-Eye `phone_look`).
-2. Identify target.
-3. Perform one human-like action (tap/swipe with small offset and press duration).
-4. Verify result.
-5. Repeat.
+2. Identify target (prefer UI tree bounds over pure coordinates).
+3. Perform one human-like action (tap/swipe with small offset and press duration 80–150ms).
+4. Verify result with a fresh dump or screenshot.
+5. Repeat only after verification.
 
 ### Computer Use on Tablet
 - Prefer structured UI tree + vision fusion when available.
@@ -111,7 +123,12 @@ Cloud computer runs a local split proxy (typically on 8788).
 - Backup exit: secondary node (same port pattern), less reliable.
 - Overseas traffic can go direct or via other paths.
 - Split proxy mainly supports HTTPS.
-- Always verify the proxy is healthy before heavy domestic scraping or login-sensitive tasks.
+- Always verify the proxy is healthy (e.g. curl a domestic site through 8788) before heavy domestic scraping or login-sensitive tasks.
+
+### Usage Notes for Bots
+- Prefer the local split proxy for any domestic traffic originating from the cloud computer.
+- If the primary exit is down, fall back to the backup exit and report the failure.
+- Do not hardcode exit IPs; query internal docs or the infrastructure bot for current addresses.
 
 ## Limitations (Current State)
 

@@ -1,0 +1,30 @@
+{
+  "skill": "lan-device-control",
+  "test_cases": [
+    {
+      "name": "tablet_control_path",
+      "input": "How do I control the tablet from a Grok Bot?",
+      "assertions": [
+        "Mentions SSH to the main Mac jump host first",
+        "States adb must run on the Mac",
+        "Notes one-bot-at-a-time and release checks"
+      ]
+    },
+    {
+      "name": "domestic_proxy",
+      "input": "How should domestic traffic be routed?",
+      "assertions": [
+        "References the local split proxy",
+        "Identifies the domestic exit node as primary"
+      ]
+    },
+    {
+      "name": "codex_limitation",
+      "input": "Can I use Codex native computer use on the main Mac right now?",
+      "assertions": [
+        "States it is not currently possible via SSH",
+        "Explains permissions must be granted on the Mac GUI"
+      ]
+    }
+  ]
+}

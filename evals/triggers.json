@@ -1,0 +1,10 @@
+{
+  "skill": "lan-device-control",
+  "test_cases": [
+    {"input": "control the tablet via the mesh", "should_trigger": true},
+    {"input": "how to SSH to the main Mac from the cloud computer", "should_trigger": true},
+    {"input": "set up EasyTier device control for other bots", "should_trigger": true},
+    {"input": "write a Feishu message", "should_trigger": false},
+    {"input": "scrape platform reviews", "should_trigger": false}
+  ]
+}

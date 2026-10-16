@@ -9,6 +9,8 @@ lifecycle: active
 
 Use this skill when a Grok Bot needs to access or control physical computers/devices in the internal EasyTier mesh.
 
+Once the Grok Bot computer (cloud computer) joins the EasyTier mesh, it can reach and control other computers and devices on the same mesh via SSH, adb, or other protocols, as long as those nodes are online and properly configured.
+
 Primary path today: SSH to the main Mac jump host → adb to the connected tablet. Desktop computer use on the Mac is not enabled.
 
 ## Open-Source Projects Used
@@ -24,12 +26,20 @@ Docs: https://easytier.cn
 
 ## Quick Start
 
-1. Confirm mesh connectivity (EasyTier running on cloud computer).
-2. For tablet control: SSH to the main Mac jump host, then run adb commands **on that Mac**.
-3. For domestic traffic: use the local split proxy on the cloud computer.
-4. Never modify production configs or restart services without explicit approval.
+1. Confirm the cloud computer is joined to the EasyTier mesh.
+2. Once on the mesh, the cloud computer can SSH or otherwise control other online nodes on the same mesh.
+3. For tablet control: SSH to the main Mac jump host, then run adb commands **on that Mac**.
+4. For domestic traffic: use the local split proxy on the cloud computer.
+5. Never modify production configs or restart services without explicit approval.
 
-## Network Overview (Generic)
+## Mesh Control Model
+
+After the Grok Bot computer joins the EasyTier mesh:
+- It becomes a peer on the mesh network.
+- It can directly reach other online mesh nodes (Macs, other computers, exit nodes) by their mesh IPs.
+- Typical controls: SSH for command-line access, adb (via a Mac jump host) for Android devices, or other services exposed on the mesh.
+- Domestic relay helps maintain stable connectivity when direct P2P is limited.
+- All control actions still require proper keys, permissions, and approval for sensitive operations.
 
 | Role | Typical Function | Notes |
 |------|------------------|-------|

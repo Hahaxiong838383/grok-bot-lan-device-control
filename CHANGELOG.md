@@ -7,3 +7,4 @@
 - Added clearer notes on domestic relay usage and domestic proxy exit nodes for the cloud computer.
 - Clarified that once the Grok Bot computer joins the EasyTier mesh, it can control other online computers and devices on the same mesh.
 - Added recommended desktop computer use solutions for macOS and Linux with repositories and evidence.
+- Supplemented tablet control, mesh model, and proxy sections with practical usage notes and recommended tools.

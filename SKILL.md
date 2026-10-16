@@ -13,6 +13,33 @@ Once the Grok Bot computer (cloud computer) joins the EasyTier mesh, it can reac
 
 Primary path today: SSH to the main Mac jump host → adb to the connected tablet. Desktop computer use on the Mac is not enabled.
 
+## Recommended Computer Use Solutions (Desktop)
+
+Current mesh path uses SSH + adb for the tablet. For full desktop computer use on Mac or Linux nodes, use the following recommended open-source projects. Always grant permissions on the target machine itself (cannot be done purely over SSH).
+
+### macOS (Recommended)
+
+| Project | Repo | Why Recommended | Key Evidence |
+|---------|------|-----------------|--------------|
+| opencode-computer-use | https://github.com/virajshoor/opencode-computer-use | Native Swift + CoreGraphics + AXUIElement; MCP for OpenCode | Swift helper uses CGEvent for input and AXUIElement for UI tree; 17 tools including screenshot, click, drag, accessibility tree |
+| open-codex-computer-use | https://github.com/iFurySt/open-codex-computer-use | Cross-platform MCP alternative to Codex Computer Use | Accessibility-first; macOS permission agent; supports macOS/Linux/Windows |
+| Codeg (codeg-computer-helper) | https://github.com/spacering-net/codeg | Official integrated solution with isolated helper | Architecture docs: helper runs cua-driver; macOS permissions granted to helper.app only |
+
+### Linux (Recommended)
+
+| Project | Repo | Why Recommended | Key Evidence |
+|---------|------|-----------------|--------------|
+| computer-use-linux | https://github.com/agent-sh/computer-use-linux | Best Wayland + AT-SPI coverage | AT-SPI + Wayland Portals + ydotool; supports GNOME, KDE, Hyprland, niri, i3, COSMIC |
+| linux-computer-use | https://github.com/tak-uukti/linux-computer-use | Lightweight X11 solution | AT-SPI 2 + xdotool + scrot; ~471-line Python bridge; X11 only |
+
+### Usage Notes for Bots
+
+1. Prefer semantic accessibility APIs (AX on macOS, AT-SPI on Linux) over pure coordinate clicking when possible.
+2. On macOS, Accessibility + Screen Recording must be granted to the helper/app on the Mac GUI.
+3. On Linux, enable toolkit-accessibility and ensure AT-SPI is running; Wayland prefers portals, X11 uses xdotool.
+4. After joining the mesh, the cloud computer can SSH to the target node and launch the local computer-use MCP/helper if installed.
+5. Do not enable computer use on production nodes without explicit approval.
+
 ## Open-Source Projects Used
 
 | Project | Purpose | Official Link |
